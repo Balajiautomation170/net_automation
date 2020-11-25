@@ -1,0 +1,6 @@
+{
+  "cisco_cfg.py::Test_login_to_devices": true, 
+  "test_cisco_cfg.py": true, 
+  "test_cisco_cfg.py::Test_login_to_devices::()::test001_ssh_login_show_ouput": true, 
+  "test_cisco_cfg.py::Test_login_to_devices::()::test002_configure_interface": true
+}

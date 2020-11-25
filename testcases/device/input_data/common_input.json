@@ -1,0 +1,39 @@
+{
+  "cisco_devices": {
+    "login_details" : [
+	    {
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.65",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R1"
+	    },
+	    {
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.66",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R2"
+	    },
+	    {
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.67",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R3" 	
+	    },
+	    {
+    	"device_type": "cisco_ios",
+    	"ip" : "10.1.1.68",
+    	"username": "cisco",
+    	"password": "cisco",
+    	"secret" : "cisco",
+    	"host": "R4" 	
+	    }
+	    ]
+	}
+}
+	    
