@@ -1,9 +1,14 @@
 import re
 import time
+import os
 import json
 import logging
 import time
-from netmiko import ConnectHandler
+import pathlib
+import paramiko
+from netmiko import ConnectHandler, Netmiko
+from netmiko.mikrotik.mikrotik_ssh import MikrotikRouterOsSSH
+from netmiko.linux.linux_ssh import LinuxSSH
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -19,13 +24,47 @@ class Ciscossh():
         execute_cmd = str(execute_cmd)
         print ("#### Logged into device {}###".format(login_det["host"]))
         router_conn = ConnectHandler(**login_det)
-        router_conn.enable()
         output = router_conn.send_command(execute_cmd)
         output_lst = output.split(",")
         # print (output_lst)
         router_conn.disconnect()
         print ("#### Logged out from device {}###".format(login_det["host"]))
         return output_lst
+
+    def execute_show_commands(self, login_det, execute_cmds, host_name):
+        """
+        Execute the show commands
+        """
+        print ("#### Logged into device {}###".format(login_det["host"]))
+        router_conn = ConnectHandler(**login_det)
+        router_conn.enable()
+        file_name = os.environ["PYTHONPATH"] + "cisco" + host_name + ".txt"
+        if os.path.exists(file_name):
+          os.remove(file_name)
+          create_cisco_file = open(file_name , "a")
+        else:
+          create_cisco_file = open(file_name , "a")
+        for execute_cmd in execute_cmds:
+            execute_cmd = str(execute_cmd)
+            print_sh = "++++++++" + execute_cmd + "+++++++++"
+            output = router_conn.send_command(execute_cmd)
+            output_error_check = re.findall("invalid|error|failed|\^", output)
+            if output_error_check:
+                print ("{} command execution failed".format(execute_cmd))
+                router_conn.disconnect()
+                create_cisco_file.close()
+                assert False
+            else:
+                output_lst = output.split(",")
+                create_cisco_file.write(str(print_sh))
+                create_cisco_file.write("\n======================\n")
+                create_cisco_file.write(str(output))
+                create_cisco_file.write("\n======================\n")
+        create_cisco_file.close()
+        router_conn.disconnect()
+        print ("All show commands are executed, please refer the log")
+        print ("log path {}".format(file_name))
+        print ("#### Logged out from device {}###".format(login_det["host"]))
 
     def config_interface(self, login_det, config_cmd):
         """
@@ -179,6 +218,98 @@ class Ciscossh():
         router_conn.disconnect()
         print ("#### Logged out from device {}###".format(login_det["host"]))
         return output
+
+
+class Mikrossh():
+
+    def __init__(self):
+        self.logger = logging.getLogger()
+
+    def m_execute_show_commands(self, login_det, execute_cmds, host_name):
+        """
+        Execute the show commands
+        """
+        print ("#### Logged into device {}###".format(login_det["host"]))
+        router_conn = paramiko.SSHClient()
+        router_conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        router_conn.connect(login_det["ip"], username=login_det["username"], password=login_det["password"])
+
+        file_name = os.environ["PYTHONPATH"] + "mikro" + host_name + ".txt"
+        if os.path.exists(file_name):
+          os.remove(file_name)
+          create_cisco_file = open(file_name , "a")
+        else:
+          create_cisco_file = open(file_name , "a")
+        for execute_cmd in execute_cmds:
+            print_sh = "++++++++" + execute_cmd + "+++++++++"
+            stdin, stdout, stderr = router_conn.exec_command(execute_cmd)
+            output_lst = stdout.readlines()
+            output = ""
+            output = output.join(output_lst)
+            output_error_check = re.findall("invalid|error|failed|\^", output)
+            if output_error_check:
+                print ("{} command execution failed".format(execute_cmd))
+                router_conn.close()
+                create_cisco_file.close()
+                assert False
+            else:
+                output_lst = output.split(",")
+                create_cisco_file.write(str(print_sh))
+                create_cisco_file.write("\n======================\n")
+                create_cisco_file.write(str(output))
+                create_cisco_file.write("\n======================\n")
+        router_conn.close()
+        create_cisco_file.close()
+        print ("All show commands are executed, please refer the log")
+        print ("log path {}".format(file_name))
+        print ("#### Logged out from device {}###".format(login_det["host"]))
+
+
+class Cumulusssh():
+
+    def __init__(self):
+        self.logger = logging.getLogger()
+
+    def c_execute_show_commands(self, login_det, execute_cmds, host_name):
+        """
+        Execute the show commands
+        """
+
+        print ("#### Logged into device {}###".format(login_det["host"]))
+        router_conn = paramiko.SSHClient()
+        router_conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        import pdb; pdb.set_trace()
+        router_conn.connect(login_det["ip"], username=login_det["username"], password=login_det["password"])
+
+        file_name = os.environ["PYTHONPATH"] + "cumulus" + host_name + ".txt"
+        if os.path.exists(file_name):
+          os.remove(file_name)
+          create_cisco_file = open(file_name , "a")
+        else:
+          create_cisco_file = open(file_name , "a")
+        for execute_cmd in execute_cmds:
+            print_sh = "++++++++" + execute_cmd + "+++++++++"
+            stdin, stdout, stderr = router_conn.exec_command(execute_cmd)
+            output_lst = stdout.readlines()
+            output = ""
+            output = output.join(output_lst)
+            output_error_check = re.findall("invalid|error|failed|\^", output)
+            if output_error_check:
+                print ("{} command execution failed".format(execute_cmd))
+                router_conn.close()
+                create_cisco_file.close()
+                assert False
+            else:
+                output_lst = output.split(",")
+                create_cisco_file.write(str(print_sh))
+                create_cisco_file.write("\n======================\n")
+                create_cisco_file.write(str(output))
+                create_cisco_file.write("\n======================\n")
+        router_conn.close()
+        create_cisco_file.close()
+        print ("All show commands are executed, please refer the log")
+        print ("log path {}".format(file_name))
+        print ("#### Logged out from device {}###".format(login_det["host"]))
 
 
 if __name__ == "__main__":

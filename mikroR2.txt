@@ -1,0 +1,41 @@
+++++++++system resource print+++++++++
+======================
+                   uptime: 3h4m18s
+                  version: 7.0beta3 (development)
+               build-time: Oct/22/2019 09:34:17
+              free-memory: 30.5MiB
+             total-memory: 96.0MiB
+                      cpu: QEMU
+                cpu-count: 1
+            cpu-frequency: 1800MHz
+                 cpu-load: 4%
+           free-hdd-space: 38.0MiB
+          total-hdd-space: 59.5MiB
+  write-sect-since-reboot: 2440
+         write-sect-total: 2441
+        architecture-name: x86_64
+               board-name: CHR
+                 platform: MikroTik
+
+
+======================
+++++++++system hardware print+++++++++
+======================
+  multi-cpu: yes
+
+
+======================
+++++++++interface print+++++++++
+======================
+Flags: X - disabled, R - running
+Columns: NAME, TYPE, ACTUal-mtu, MAC-ADDRESS
+#     NAME    TYPE   ACTU  MAC-ADDRESS      
+0  R  ether1  ether  1500  0C:0F:0F:89:E6:00
+1  R  ether2  ether  1500  0C:0F:0F:89:E6:01
+2     ether3  ether  1500  0C:0F:0F:89:E6:02
+3     ether4  ether  1500  0C:0F:0F:89:E6:03
+4     ether5  ether  1500  0C:0F:0F:89:E6:04
+5     ether6  ether  1500  0C:0F:0F:89:E6:05
+
+
+======================

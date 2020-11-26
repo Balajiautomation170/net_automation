@@ -10,28 +10,12 @@
     	"host": "R1"
 	    },
 	    {
-    	"device_type": "cisco_ios",
+    	"device_type": "mikrotik_routeros",
     	"ip" : "10.1.1.66",
-    	"username": "cisco",
-    	"password": "cisco",
-    	"secret" : "cisco",
+    	"username": "admin",
+    	"password": "",
+    	"port" : 22,
     	"host": "R2"
-	    },
-	    {
-    	"device_type": "cisco_ios",
-    	"ip" : "10.1.1.67",
-    	"username": "cisco",
-    	"password": "cisco",
-    	"secret" : "cisco",
-    	"host": "R3" 	
-	    },
-	    {
-    	"device_type": "cisco_ios",
-    	"ip" : "10.1.1.68",
-    	"username": "cisco",
-    	"password": "cisco",
-    	"secret" : "cisco",
-    	"host": "R4" 	
 	    }
 	    ]
 	}

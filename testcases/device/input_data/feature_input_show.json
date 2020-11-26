@@ -1,0 +1,47 @@
+{
+  "group_configuration": {
+    "R1": {
+    	"interfaces" :[
+    	{
+    	"name" : "lo1",
+		"ip_address": "50.1.1.1",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/0",
+		"ip_address": "192.168.1.1",
+		"net_mask" : "255.255.255.0"
+		}
+	    ],
+    	"show commands" :[
+		  "show version",
+		  "show ip int bri",
+		  "show running-config"
+	]		
+    },
+    "R2": {
+    	"interfaces" :[
+     	{
+    	"name" : "lo1",
+		"ip_address": "51.1.1.1",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/0",
+		"ip_address": "192.168.1.2",
+		"net_mask" : "255.255.255.0"
+		},
+    	{
+    	"name" : "Ethernet1/1",
+		"ip_address": "192.168.2.1",
+		"net_mask" : "255.255.255.0"
+		}
+	],
+		"show commands" :[
+		  "system resource print",
+		  "system hardware print",
+		  "interface print"
+	]	
+    }  
+ }
+}

@@ -1378,6 +1378,7 @@ Device settings: {self.device_type} {self.host}:{self.port}
             # it gets repainted and needs filtered
             lines = data.split(self.RETURN)
             first_line = lines[0]
+            
             if BACKSPACE_CHAR in first_line:
                 pattern = search_pattern + r".*$"
                 first_line = re.sub(pattern, repl="", string=first_line)
@@ -1531,7 +1532,6 @@ Device settings: {self.device_type} {self.host}:{self.port}
                     search_pattern
                 )
             )
-
         output = self._sanitize_output(
             output,
             strip_command=strip_command,
@@ -1562,6 +1562,7 @@ Device settings: {self.device_type} {self.host}:{self.port}
             # If we have structured data; return it.
             if not isinstance(structured_output, str):
                 return structured_output
+        
         return output
 
     def send_command_expect(self, *args, **kwargs):
