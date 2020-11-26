@@ -31,29 +31,17 @@ class Test_login_to_devices():
         request.cls.all_devices = request.cls.common_input["cisco_devices"]["login_details"]
         request.cls.feature_config = request.cls.feature_input["group_configuration"]
         request.cls.device_cli_out = Ciscossh_output()
-        request.cls.mikro_cli_out = Mikrossh_output()
+        request.cls.paramiko_cli_out = Mikrossh_output()
 
-    def test001_ssh_login_show_ouput(self):
-        """
-        Devices : login into all show version ,show ip int
-        """
-        for det in self.all_devices:
-            if det["device_type"] == "cisco_ios":
-                show_commands = self.feature_config[host_cfg]
-                self.cisco_cli_out.ssh_login_show_ouput(det, show_commands["show commands"])
-            if det["device_type"] == "mikrotik-routeros":
-                show_commands = self.feature_config[host_cfg]
-                self.mikro_cli_out.ssh_login_show_ouput(det, show_commands["show commands"])
-
-    def test002_show_commands(self):
+    def test001_show_commands(self):
         """
         Devices : login into all show version ,show ip int
         """
         for det in self.all_devices:
             host_cfg = det["host"]
-            if det["device_type"] == "mikrotik_routeros":
+            if det["device_type"] == "paramiko":
                 show_commands = self.feature_config[host_cfg]
-                self.mikro_cli_out.m_execute_show_ouput(det, show_commands["show commands"], host_cfg)
+                self.paramiko_cli_out.m_execute_show_ouput(det, show_commands["show commands"], host_cfg)
             else:
                 show_commands = self.feature_config[host_cfg]
                 self.device_cli_out.execute_show_ouput(det, show_commands["show commands"], host_cfg)

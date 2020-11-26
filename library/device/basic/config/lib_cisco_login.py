@@ -38,7 +38,7 @@ class Ciscossh():
         print ("#### Logged into device {}###".format(login_det["host"]))
         router_conn = ConnectHandler(**login_det)
         router_conn.enable()
-        file_name = os.environ["PYTHONPATH"] + "cisco" + host_name + ".txt"
+        file_name = os.environ["PYTHONPATH"] + login_det["device_type"] + "_" + login_det["ip"] + ".txt"
         if os.path.exists(file_name):
           os.remove(file_name)
           create_cisco_file = open(file_name , "a")
@@ -234,7 +234,7 @@ class Mikrossh():
         router_conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         router_conn.connect(login_det["ip"], username=login_det["username"], password=login_det["password"])
 
-        file_name = os.environ["PYTHONPATH"] + "mikro" + host_name + ".txt"
+        file_name = os.environ["PYTHONPATH"] + login_det["device_type"] + "_" + login_det["ip"] + ".txt"
         if os.path.exists(file_name):
           os.remove(file_name)
           create_cisco_file = open(file_name , "a")
